@@ -9,3 +9,9 @@ models/
 .idea/
 .vscode/
 .DS_Store
+
+# Local envs
+.env
+.env*/
+.venv/
+venv/
