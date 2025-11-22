@@ -1,17 +1,52 @@
+# Git
 .git
+.gitignore
+.gitattributes
+
+# Python
 __pycache__
 *.pyc
 *.pyo
 *.pyd
-*.swp
-.env
+*.egg-info
+.pyc
+
+# Virtual Environments
 .venv
-.wheels
+venv/
+env/
+
+# Build & Distribution
 build/
 dist/
+.wheels
+
+# IDE & OS
 .idea/
 .vscode/
 .DS_Store
-.gitignore
-models/
+*.swp
+*.swo
+
+# Jupyter
 *.ipynb_checkpoints
+
+# ML & Data (kept in production)
+# Note: models/ is NOT ignored - it's needed for the API
+# Note: mlruns/ and data/ are excluded to reduce image size
+
+# Documentation & Archives
+README.md
+LICENSE
+*.md
+docs_archive/
+docs/
+.github/
+
+# Infrastructure
+infra/
+Dockerfile
+docker-compose.yml
+.dockerignore
+pytest.ini
+Makefile

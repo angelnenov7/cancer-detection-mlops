@@ -1,15 +1,24 @@
 output "service_url" {
-value = google_cloud_run_v2_service.api.uri
+  description = "URL of the deployed Cancer Detection API"
+  value       = google_cloud_run_service.api.status[0].url
 }
 
-
-output "workload_identity_provider" {
-description = "Use this value in GitHub Actions 'workload_identity_provider' input"
-value = google_iam_workload_identity_pool_provider.gh_provider.name
+output "artifact_registry" {
+  description = "Artifact Registry repository for Docker images"
+  value       = "${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.repo.repository_id}"
 }
-
 
 output "deployer_service_account" {
-description = "Use this value in GitHub Actions 'service_account' input"
-value = google_service_account.deployer.email
+  description = "Service account email for GitHub deployments"
+  value       = google_service_account.deployer.email
+}
+
+output "project_id" {
+  description = "GCP Project ID"
+  value       = var.project_id
+}
+
+output "region" {
+  description = "GCP Region"
+  value       = var.region
 }

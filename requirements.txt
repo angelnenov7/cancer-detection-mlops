@@ -1,18 +1,32 @@
-fastapi==0.104.1  # Downgraded to maintain compatibility
+# Web Framework & Server
+fastapi==0.104.1
 uvicorn==0.27.1
-uvicorn[standard]
+
+# Data Validation
 pydantic==2.8.2
 pydantic-settings==2.10.1
 typing-extensions>=4.5.0
+
+# Data Processing
 pandas>=2.2.0
 numpy>=1.23.2,<2.0.0
+
+# ML & Models
 scikit-learn>=1.5.0
+joblib==1.4.2
+
+# ML Ops & Experiment Tracking
 mlflow>=2.14.0
 prefect==2.14.12
-joblib==1.4.2
+
+# Testing
 pytest==8.0.2
 httpx==0.27.0
+
+# Code Quality & Linting
 black==24.2.0
 ruff==0.2.2
 mypy==1.8.0
+
+# Environment Management
 python-dotenv==1.0.1

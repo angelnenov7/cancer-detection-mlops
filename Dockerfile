@@ -1,4 +1,6 @@
 # ---------- Builder ----------
+FROM python:3.11-slim AS builder
+
 ENV POETRY_VERSION=1.8.3 \
 PYTHONDONTWRITEBYTECODE=1 \
 PYTHONUNBUFFERED=1
@@ -45,10 +47,9 @@ COPY --from=builder /wheels /wheels
 RUN pip install --no-cache-dir /wheels/*
 
 
-# Copy application code
-COPY ./src ./src
-COPY ./assets ./assets 2>/dev/null || true
-COPY ./models ./models 2>/dev/null || true
+# Copy application code and model
+COPY ./src ./src/
+COPY ./models ./models/
 
 
 # Drop privileges
@@ -64,4 +65,4 @@ EXPOSE 8080
 
 
 # Start via uvicorn (adjust import path to your FastAPI app)
-CMD ["python", "-m", "uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "2"]
+CMD ["python", "-m", "uvicorn", "src.serve:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "2"]

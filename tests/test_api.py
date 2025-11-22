@@ -9,8 +9,8 @@ client = TestClient(app)  # Reverted to standard initialization
 def test_root_endpoint():
     response = client.get("/")
     assert response.status_code == 200
-    assert "name" in response.json()
-    assert "endpoints" in response.json()
+    # Root now returns HTML UI, not JSON
+    assert "html" in response.text.lower() or "cancer" in response.text.lower()
 
 def test_health_endpoint():
     response = client.get("/health")

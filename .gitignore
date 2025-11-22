@@ -1,17 +1,42 @@
+# Python & Virtual Environments
 .venv/
+venv/
 __pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# ML & Data
 mlruns/
 models/
+modles/
+
+# Environment Variables
 .env
-*.pyc
-.pytest_cache/
-.coverage
+.env*/
+
+# IDE & OS
 .idea/
 .vscode/
 .DS_Store
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
 
-# Local envs
-.env
-.env*/
-.venv/
-venv/
+# Documentation Archives (kept locally for reference, not in git)
+docs_archive/
+
+# Local Terraform state, plans, and provider cache
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+/infra/terraform/terraform.tfvars
+/infra/terraform/tfplan
+
+# Local model outputs
+mlruns/
+models/*.joblib

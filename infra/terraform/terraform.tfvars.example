@@ -1,0 +1,23 @@
+# Terraform Variables - COPY THIS AND UPDATE WITH YOUR VALUES
+# Save as: infra/terraform/terraform.tfvars
+
+# Your GCP Project ID (required)
+project_id = "your-gcp-project-id"
+
+# GCP Region for deployment
+region = "europe-west1"
+
+# Artifact Registry repository ID
+artifact_repo_id = "mlops"
+
+# Cloud Run service name
+service_name = "cancer-detection-api"
+
+# Container image tag
+image_tag = "latest"
+
+# GitHub repository owner (your username)
+github_owner = "angelnenov7"
+
+# GitHub repository name
+github_repo = "cancer-detection-mlops"

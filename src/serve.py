@@ -5,11 +5,13 @@ from typing import List
 
 import numpy as np
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import HTMLResponse
 import time
 
 from pydantic import BaseModel, field_validator
 
 from src.model import load_model
+from src.ui_template import HTML_TEMPLATE
 
 # Breast Cancer dataset has 30 features
 FEATURE_COUNT = 30
@@ -44,17 +46,10 @@ class PredictRequest(BaseModel):
         return v
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    """Root endpoint"""
-    return {
-        "name": "Cancer Detection API",
-        "endpoints": {
-            "health": "/health",
-            "predict": "/predict",
-            "docs": "/docs",
-        },
-    }
+    """Root endpoint - serves interactive UI"""
+    return HTML_TEMPLATE
 
 
 @app.get("/health")

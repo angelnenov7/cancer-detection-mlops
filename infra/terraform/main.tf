@@ -69,8 +69,59 @@ member = "serviceAccount:${google_service_account.run_runtime.email}"
 }
 
 
-# ---------- Workload Identity Federation for GitHub OIDC ----------
-resource "google_iam_workload_identity_pool" "gh_pool" {
-workload_identity_pool_id = "github-pool"
-display_name = "GitHub Actions Pool"
+
+
+# ---------- Cloud Run Service ----------
+resource "google_cloud_run_service" "api" {
+  name     = var.service_name
+  location = var.region
+
+  template {
+    spec {
+      service_account_name = google_service_account.run_runtime.email
+
+      containers {
+        image = "${var.region}-docker.pkg.dev/${var.project_id}/${var.artifact_repo_id}/${var.service_name}:latest"
+
+        resources {
+          limits = {
+            cpu    = "1000m"
+            memory = "512Mi"
+          }
+        }
+
+        env {
+          name  = "MODEL_PATH"
+          value = "models/model.joblib"
+        }
+      }
+
+      timeout_seconds = 300
+    }
+  }
+
+  traffic {
+    percent         = 100
+    latest_revision = true
+  }
+
+  depends_on = [
+    google_project_service.services,
+    google_artifact_registry_repository.repo
+  ]
 }
+
+
+# Cloud Run IAM: Allow public access
+resource "google_cloud_run_service_iam_member" "public_access" {
+  service  = google_cloud_run_service.api.name
+  location = google_cloud_run_service.api.location
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
+
+
+# ---------- GitHub Actions Setup ----------
+# For GitHub OIDC authentication, manually add a service account key to GitHub secrets:
+# gcloud iam service-accounts keys create ~/key.json --iam-account=run-deployer@PROJECT_ID.iam.gserviceaccount.com
+# Then add to GitHub Secrets as: GCP_SA_KEY (base64 encoded)
