@@ -1,7 +1,11 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.exe
+
 .venv/
 __pycache__/
-mlruns/
-models/
 .env
 *.pyc
 .pytest_cache/
@@ -13,5 +17,17 @@ models/
 # Local envs
 .env
 .env*/
+
+# Local MLflow runs and model outputs
+mlruns/
+models/*.joblib
+
+# Local Terraform state, plans, and provider cache
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+/infra/terraform/terraform.tfvars
+/infra/terraform/tfplan
 .venv/
 venv/
